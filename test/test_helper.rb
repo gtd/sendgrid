@@ -14,7 +14,8 @@ class SendgridCampaignTestMailer < ActionMailer::Base
   include SendGrid
   
   sendgrid_enable :opentrack, :clicktrack, :subscriptiontrack, :bypass_list_management
-    
+  sendgrid_disable :gravatar
+
   REQUIRED_OPTIONS = [:to, :from, :category, :html_content, :subject]
   
   ##
