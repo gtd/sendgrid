@@ -81,6 +81,12 @@ module SendGrid
     @sg_settings ||= {}
   end
 
+  # Unique Args for Email Callback
+  def sendgrid_unique_args(val)
+    @sg_unique_args ||= {}
+    @sg_unique_args.merge!(val) if val.is_a?(Hash)
+  end
+
   # Sets the custom X-SMTPAPI header after creating the email but before delivery
   def create!(method_name, *parameters)
     super
@@ -118,6 +124,11 @@ module SendGrid
     # Set custom substitions
     if @sg_substitutions && !@sg_substitutions.empty?
       header_opts[:sub] = @sg_substitutions
+    end
+
+    # Set unique args for event callbacks
+    if @sg_unique_args && !@sg_unique_args.empty?
+      header_opts[:unique_args] = @sg_unique_args
     end
 
     # Set enables/disables
